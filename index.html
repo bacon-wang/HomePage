@@ -1,0 +1,128 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="王培根的个人主页与数字分身。" />
+    <title>王培根 / Personal</title>
+    <link rel="stylesheet" href="styles.css" />
+    <script src="app.js" defer></script>
+  </head>
+  <body>
+    <div class="site-shell">
+      <header class="topbar">
+        <a class="wordmark" href="#top" aria-label="回到王培根个人主页">
+          <span>王培根</span>
+          <span class="wordmark-sub">/ PERSONAL</span>
+        </a>
+      </header>
+
+      <main id="top" class="page-content">
+        <section class="hero-grid" aria-labelledby="profile-title">
+          <div class="profile-column">
+            <div class="profile-intro">
+              <p class="eyebrow">个人主页 / 2026</p>
+              <h1 id="profile-title">王培根</h1>
+              <p class="tagline">闷骚</p>
+              <p class="profile-summary">
+                在 C++ 后端和 vibe coding 之间切换，偶尔让大脑安静地过载。
+              </p>
+            </div>
+
+            <section class="facts-section" aria-labelledby="facts-title">
+              <div class="section-heading">
+                <h2 id="facts-title">关于我</h2>
+                <span class="section-index">01</span>
+              </div>
+              <dl class="info-list">
+                <div class="info-row">
+                  <dt>身份</dt>
+                  <dd>学生</dd>
+                </div>
+                <div class="info-row">
+                  <dt>现在在做</dt>
+                  <dd>C++ 后端开发 / vibe coding 学习</dd>
+                </div>
+                <div class="info-row">
+                  <dt>兴趣</dt>
+                  <dd>健身、游戏</dd>
+                </div>
+                <div class="info-row">
+                  <dt>记忆点</dt>
+                  <dd>大脑容易过载，总是在发愣</dd>
+                </div>
+              </dl>
+            </section>
+
+            <p class="profile-note">
+              朋友可以从右边问我几句。回答是本地演示，但设定是真的。
+            </p>
+          </div>
+
+          <aside class="chat-panel" aria-labelledby="chat-title">
+            <div class="chat-header">
+              <div>
+                <p class="chat-kicker">DIGITAL TWIN</p>
+                <h2 id="chat-title">和我的分身聊聊</h2>
+              </div>
+              <span class="chat-state" aria-label="数字分身在线，本地演示">
+                <span class="status-dot" aria-hidden="true"></span>
+                <span>在线 / 本地演示</span>
+              </span>
+            </div>
+
+            <div class="presence-line" aria-label="分身当前状态">
+              <span class="presence-pulse" aria-hidden="true"></span>
+              <span>脑内缓存较多，正在认真听</span>
+            </div>
+
+            <div class="chat-window" id="chat-window" aria-live="polite" aria-label="聊天记录">
+              <div class="message message-assistant">
+                <span class="message-author">培根的分身</span>
+                <p>嗨。你可以问我最近在忙什么，或者 C++、AI 和 vibe coding。</p>
+              </div>
+              <div class="message message-assistant message-muted">
+                <span class="message-author">提示</span>
+                <p>我可能会先发一会儿呆，再给你一个不太绕的回答。</p>
+              </div>
+            </div>
+
+            <div class="prompt-list" aria-label="快捷问题">
+              <button class="prompt-button" type="button" data-question="你最近在忙什么？">
+                你最近在忙什么？
+              </button>
+              <button class="prompt-button" type="button" data-question="你为什么学 vibe coding？">
+                为什么学 vibe coding？
+              </button>
+              <button class="prompt-button" type="button" data-question="你擅长什么？">
+                你擅长什么？
+              </button>
+            </div>
+
+            <form class="chat-form" id="chat-form">
+              <label class="sr-only" for="chat-input">输入问题</label>
+              <textarea
+                id="chat-input"
+                name="message"
+                rows="1"
+                maxlength="240"
+                placeholder="问我一点什么..."
+                autocomplete="off"
+                required
+              ></textarea>
+              <button class="send-button" type="submit" aria-label="发送消息" title="发送消息">
+                <span aria-hidden="true">↑</span>
+              </button>
+            </form>
+            <p class="chat-hint">Enter 发送 · Shift + Enter 换行</p>
+          </aside>
+        </section>
+      </main>
+
+      <footer class="site-footer">
+        <span>王培根的个人主页</span>
+        <span>保持在线，也允许偶尔发愣。</span>
+      </footer>
+    </div>
+  </body>
+</html>
