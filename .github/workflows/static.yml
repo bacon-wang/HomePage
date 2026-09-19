@@ -37,7 +37,7 @@ jobs:
         env:
           CHAT_API_URL: ${{ vars.CHAT_API_URL }}
         run: |
-          node -e 'const fs = require("fs"); fs.writeFileSync("chat-config.js", "window.CHAT_API_URL = " + JSON.stringify(process.env.CHAT_API_URL || "") + ";\n");'
+          node -e 'if (process.env.CHAT_API_URL) { const fs = require("fs"); fs.writeFileSync("chat-config.js", "window.CHAT_API_URL = " + JSON.stringify(process.env.CHAT_API_URL) + ";\n"); }'
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:

@@ -131,12 +131,12 @@ function extractOutputText(payload) {
   return text || "";
 }
 
-async function requestOpenAI(messages, env) {
+async function requestModel(messages, env) {
   const controller = new AbortController();
   const timeout = setTimeout(() => controller.abort(), OPENAI_TIMEOUT_MS);
 
   try {
-    const response = await fetch("https://api.openai.com/v1/responses", {
+    const response = await fetch("https://www.fhl.mom/responses", {
       method: "POST",
       headers: {
         Authorization: `Bearer ${env.OPENAI_API_KEY}`,
@@ -149,21 +149,23 @@ async function requestOpenAI(messages, env) {
         })),
         instructions: SYSTEM_PROMPT,
         max_output_tokens: MAX_OUTPUT_TOKENS,
-        model: env.OPENAI_MODEL || "gpt-5.6-luna",
+        model: env.OPENAI_MODEL || "gpt-5.6-terra",
         store: false,
       }),
       signal: controller.signal,
     });
 
     if (!response.ok) {
-      throw new Error(`OpenAI returned ${response.status}`);
+      const error = new Error(`Model provider returned ${response.status}`);
+      error.status = response.status;
+      throw error;
     }
 
     const payload = await response.json();
     const text = extractOutputText(payload);
 
     if (!text) {
-      throw new Error("OpenAI response did not contain output text");
+      throw new Error("Model response did not contain output text");
     }
 
     return text;
@@ -224,10 +226,18 @@ async function handleChat(request, env, origin) {
   }
 
   try {
-    const answer = await requestOpenAI(body.messages, env);
+    const answer = await requestModel(body.messages, env);
     return jsonResponse({ message: { content: answer, role: "assistant" } }, 200, origin, env);
   } catch (error) {
-    const code = error?.name === "AbortError" ? "upstream_timeout" : "upstream_error";
+    const code = error?.name === "AbortError"
+      ? "upstream_timeout"
+      : error?.status === 401
+        ? "upstream_unauthorized"
+        : error?.status === 404
+          ? "model_unavailable"
+          : error?.status === 429
+            ? "upstream_rate_limited"
+            : "upstream_error";
     const status = code === "upstream_timeout" ? 504 : 502;
     return jsonResponse(
       { error: { code, message: "AI 暂时没有回应，请稍后再试。" } },

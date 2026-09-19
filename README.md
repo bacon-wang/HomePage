@@ -41,14 +41,14 @@ python3 -m http.server 4173
 
 如果是第一次开启 Pages，需要在 **Settings → Pages** 将 Source 设置为 `GitHub Actions`。
 
-聊天区在没有配置 `CHAT_API_URL` 时使用本地关键词回答。配置 Worker 后，访客消息会发送到自己的 Cloudflare Worker，再由 Worker 调用 OpenAI；OpenAI API Key 不会进入前端或 GitHub 仓库。
+聊天区使用 `chat-config.js` 中的公开 Worker 地址；Worker 不可用时会退回本地关键词回答。访客消息会发送到 Cloudflare Worker，再由 Worker 通过 FHL 第三方平台转发到模型服务；平台 API Key 不会进入前端或 GitHub 仓库。请勿在聊天中输入敏感信息。
 
 ## 接入真实 AI
 
 真实 AI 的调用链是：
 
 ```text
-GitHub Pages -> Cloudflare Worker -> OpenAI Responses API
+GitHub Pages -> Cloudflare Worker -> FHL Responses API -> 模型服务
 ```
 
 ### Cloudflare 配置
@@ -63,7 +63,7 @@ npx wrangler secret put OPENAI_API_KEY
 npm run deploy
 ```
 
-Worker 默认名称为 `bacon-homepage-chat`，模型通过 `OPENAI_MODEL` 配置，默认使用 `gpt-5.6-luna`。
+Worker 默认名称为 `bacon-homepage-chat`，上游地址为 `https://www.fhl.mom/responses`，模型通过 `OPENAI_MODEL` 配置，默认使用平台文档列出的 `gpt-5.6-terra`。`OPENAI_API_KEY` 是 FHL 平台签发的密钥，不是 OpenAI 官方密钥。
 
 ### GitHub 配置
 
@@ -76,9 +76,9 @@ Secrets：
 
 Variables：
 
-- `CHAT_API_URL`：Worker 部署后的完整地址，例如 `https://bacon-homepage-chat.<account>.workers.dev/chat`
+- `CHAT_API_URL`：可选，用于覆盖 `chat-config.js` 中的公开 Worker 地址
 
-之后推送到 `main` 会分别触发 Pages 和 Worker 工作流。没有配置 `CHAT_API_URL` 时，页面仍会自动使用本地演示回答。
+推送到 `main` 会触发 Pages 工作流；修改 `worker/` 还会触发 Worker 工作流，后者在尚未配置上述两个 GitHub Secrets 时会跳过自动部署，可继续使用本地 Wrangler 手动部署。需要纯本地演示时，将 `chat-config.js` 中的地址改为空字符串即可。
 
 本地调试 Worker 时，可复制 `worker/.dev.vars.example` 为 `worker/.dev.vars`，填入本地 API Key，再运行：
 
