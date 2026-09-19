@@ -16,7 +16,9 @@ python3 -m http.server 4173
 
 - `index.html`：页面结构与个人信息
 - `styles.css`：黑白视觉、响应式布局和组件样式
-- `app.js`：本地关键词聊天逻辑
+- `app.js`：聊天交互、AI 请求和本地关键词兜底
+- `chat-config.js`：公开的聊天 API 地址配置
+- `worker/`：Cloudflare Worker API 代理
 
 ## 添加个人信息方格
 
@@ -39,7 +41,52 @@ python3 -m http.server 4173
 
 如果是第一次开启 Pages，需要在 **Settings → Pages** 将 Source 设置为 `GitHub Actions`。
 
-当前聊天区不依赖 API Key，也不会向外部服务发送访客输入。
+聊天区在没有配置 `CHAT_API_URL` 时使用本地关键词回答。配置 Worker 后，访客消息会发送到自己的 Cloudflare Worker，再由 Worker 调用 OpenAI；OpenAI API Key 不会进入前端或 GitHub 仓库。
+
+## 接入真实 AI
+
+真实 AI 的调用链是：
+
+```text
+GitHub Pages -> Cloudflare Worker -> OpenAI Responses API
+```
+
+### Cloudflare 配置
+
+在本地登录 Cloudflare 并部署 Worker：
+
+```bash
+cd worker
+npm install
+npx wrangler login
+npx wrangler secret put OPENAI_API_KEY
+npm run deploy
+```
+
+Worker 默认名称为 `bacon-homepage-chat`，模型通过 `OPENAI_MODEL` 配置，默认使用 `gpt-5.6-luna`。
+
+### GitHub 配置
+
+在仓库的 **Settings → Secrets and variables → Actions** 中添加：
+
+Secrets：
+
+- `CLOUDFLARE_API_TOKEN`
+- `CLOUDFLARE_ACCOUNT_ID`
+
+Variables：
+
+- `CHAT_API_URL`：Worker 部署后的完整地址，例如 `https://bacon-homepage-chat.<account>.workers.dev/chat`
+
+之后推送到 `main` 会分别触发 Pages 和 Worker 工作流。没有配置 `CHAT_API_URL` 时，页面仍会自动使用本地演示回答。
+
+本地调试 Worker 时，可复制 `worker/.dev.vars.example` 为 `worker/.dev.vars`，填入本地 API Key，再运行：
+
+```bash
+npm run dev --prefix worker
+```
+
+不要提交 `worker/.dev.vars` 或任何 API Key。
 
 ## 图片来源
 

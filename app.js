@@ -5,6 +5,10 @@ const sendButton = document.querySelector(".send-button");
 const promptButtons = document.querySelectorAll(".prompt-button");
 const gameTrack = document.querySelector(".game-track");
 const gameControls = document.querySelectorAll(".game-control");
+const chatApiUrl = typeof window.CHAT_API_URL === "string" ? window.CHAT_API_URL.trim() : "";
+const maxHistoryMessages = 8;
+let conversation = [];
+let isSubmitting = false;
 
 const responseRules = [
   {
@@ -58,9 +62,9 @@ function scrollChatToBottom() {
   chatWindow.scrollTop = chatWindow.scrollHeight;
 }
 
-function addMessage(content, role) {
+function addMessage(content, role, variant = "") {
   const message = document.createElement("div");
-  message.className = `message message-${role}`;
+  message.className = `message message-${role}${variant ? ` ${variant}` : ""}`;
 
   const author = document.createElement("span");
   author.className = "message-author";
@@ -89,32 +93,98 @@ function addTypingMessage() {
 }
 
 function setInputState() {
-  sendButton.disabled = !chatInput.value.trim();
+  sendButton.disabled = isSubmitting || !chatInput.value.trim();
+  promptButtons.forEach((button) => {
+    button.disabled = isSubmitting;
+  });
 }
 
-function submitMessage(rawMessage) {
+function keepRecentMessages() {
+  conversation = conversation.slice(-maxHistoryMessages);
+}
+
+async function requestChat(messages) {
+  if (!chatApiUrl) {
+    await new Promise((resolve) => window.setTimeout(resolve, 520));
+    return {
+      answer: findResponse(messages.at(-1).content),
+      remote: false,
+    };
+  }
+
+  const controller = new AbortController();
+  const timeout = window.setTimeout(() => controller.abort(), 20_000);
+
+  try {
+    const response = await fetch(chatApiUrl, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ messages }),
+      signal: controller.signal,
+    });
+    const payload = await response.json().catch(() => ({}));
+
+    if (!response.ok || typeof payload.message?.content !== "string") {
+      throw new Error(payload.error?.code || "chat_request_failed");
+    }
+
+    const answer = payload.message.content.trim();
+    if (!answer) {
+      throw new Error("chat_response_empty");
+    }
+
+    return { answer, remote: true };
+  } finally {
+    window.clearTimeout(timeout);
+  }
+}
+
+async function submitMessage(rawMessage) {
   const message = rawMessage.trim();
 
-  if (!message) {
+  if (!message || isSubmitting) {
     setInputState();
     return;
   }
 
   addMessage(message, "user");
+  conversation.push({ content: message, role: "user" });
+  keepRecentMessages();
   chatInput.value = "";
   chatInput.style.height = "auto";
+  isSubmitting = true;
   setInputState();
 
   const typingMessage = addTypingMessage();
-  window.setTimeout(() => {
+  try {
+    const result = await requestChat(conversation);
     typingMessage.remove();
-    addMessage(findResponse(message), "assistant");
-  }, 520);
+
+    if (!result.remote && chatApiUrl) {
+      addMessage("AI 暂时不可用，已切回本地演示。", "assistant", "message-muted");
+    }
+
+    addMessage(result.answer, "assistant");
+    conversation.push({ content: result.answer, role: "assistant" });
+    keepRecentMessages();
+  } catch {
+    typingMessage.remove();
+    addMessage("AI 暂时不可用，已切回本地演示。", "assistant", "message-muted");
+    const fallbackAnswer = findResponse(message);
+    addMessage(fallbackAnswer, "assistant");
+    conversation.push({ content: fallbackAnswer, role: "assistant" });
+    keepRecentMessages();
+  } finally {
+    isSubmitting = false;
+    setInputState();
+  }
 }
 
 chatForm.addEventListener("submit", (event) => {
   event.preventDefault();
-  submitMessage(chatInput.value);
+  void submitMessage(chatInput.value);
 });
 
 chatInput.addEventListener("input", () => {
@@ -126,7 +196,7 @@ chatInput.addEventListener("input", () => {
 chatInput.addEventListener("keydown", (event) => {
   if (event.key === "Enter" && !event.shiftKey) {
     event.preventDefault();
-    submitMessage(chatInput.value);
+    void submitMessage(chatInput.value);
   }
 });
 
@@ -135,7 +205,7 @@ promptButtons.forEach((button) => {
     const question = button.dataset.question;
     chatInput.value = question;
     chatInput.dispatchEvent(new Event("input"));
-    submitMessage(question);
+    void submitMessage(question);
   });
 });
 
