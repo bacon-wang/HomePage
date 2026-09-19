@@ -271,13 +271,51 @@ h1 {
   background: var(--surface);
 }
 
-.module-games {
-  grid-column: span 2;
-}
-
 .module-wide {
   grid-column: span 2;
   min-height: 176px;
+}
+
+.games-module {
+  grid-column: span 2;
+  grid-row: span 2;
+  min-width: 0;
+  min-height: 364px;
+  padding: 20px;
+  border: 1px solid var(--line);
+  background: var(--surface);
+  overflow: hidden;
+}
+
+.games-module .module-label {
+  margin: 0;
+  color: var(--ink);
+}
+
+.game-controls {
+  display: flex;
+  gap: 5px;
+}
+
+.game-control {
+  display: grid;
+  width: 28px;
+  height: 28px;
+  padding: 0;
+  place-items: center;
+  border: 1px solid #c9c9c5;
+  border-radius: 0;
+  background: var(--white);
+  cursor: pointer;
+  font-size: 13px;
+  line-height: 1;
+  transition: background-color 160ms ease, border-color 160ms ease, color 160ms ease;
+}
+
+.game-control:hover {
+  border-color: var(--ink);
+  background: var(--ink);
+  color: var(--white);
 }
 
 .module-dark {
@@ -345,6 +383,27 @@ h1 {
   line-height: 1.65;
 }
 
+.module-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 15px;
+  margin-top: 28px;
+}
+
+.module-links a {
+  border-bottom: 1px solid var(--ink);
+  color: var(--ink);
+  font-size: 12px;
+  line-height: 1.6;
+  text-decoration: none;
+  transition: color 160ms ease, border-color 160ms ease;
+}
+
+.module-links a:hover {
+  border-color: var(--muted);
+  color: var(--muted);
+}
+
 .module-dark .module-content p {
   color: #c9c9c4;
 }
@@ -389,6 +448,96 @@ h1 {
 .module-inline-content h3,
 .module-inline-content p {
   margin-bottom: 0;
+}
+
+.game-track {
+  display: flex;
+  height: 274px;
+  gap: 10px;
+  min-width: 0;
+  margin-top: 16px;
+  padding-bottom: 4px;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  scrollbar-color: #c8c8c4 transparent;
+  scrollbar-width: thin;
+  -webkit-overflow-scrolling: touch;
+}
+
+.game-card {
+  position: relative;
+  display: flex;
+  flex: 0 0 min(390px, 82%);
+  min-width: 0;
+  aspect-ratio: 1;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 16px;
+  scroll-snap-align: start;
+  background-image: linear-gradient(180deg, rgba(17, 17, 17, 0.1) 10%, rgba(17, 17, 17, 0.92) 100%), var(--game-image);
+  background-position: center;
+  background-size: cover;
+  color: var(--white);
+  overflow: hidden;
+}
+
+.game-card-topline {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 12px;
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.game-card-topline span:last-child {
+  color: #c9c9c4;
+}
+
+.game-card-content h4 {
+  margin: 0 0 9px;
+  font-size: 19px;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  line-height: 1.2;
+}
+
+.game-card-content p {
+  margin: 0;
+  color: #e5e5e1;
+  font-size: 12px;
+  line-height: 1.55;
+}
+
+.games-note {
+  margin: 11px 0 0;
+  color: var(--soft-muted);
+  font-size: 10px;
+}
+
+.module-image {
+  background-position: center 34%;
+  background-size: cover;
+  color: var(--white);
+}
+
+.module-fitness {
+  background-image: linear-gradient(180deg, rgba(17, 17, 17, 0.12) 8%, rgba(17, 17, 17, 0.86) 100%), url("assets/fitness-tan-chengyi.jpg");
+}
+
+.module-fitness:hover {
+  background-image: linear-gradient(180deg, rgba(17, 17, 17, 0.2) 8%, rgba(17, 17, 17, 0.9) 100%), url("assets/fitness-tan-chengyi.jpg");
+}
+
+.module-image .module-label,
+.module-image .module-number {
+  color: #e5e5e1;
+}
+
+.module-image .module-content p {
+  color: #ededE9;
 }
 
 .chat-panel {
@@ -684,12 +833,17 @@ h1 {
   }
 
   .module-featured,
-  .module-games,
   .module-wide {
     grid-column: span 2;
   }
 
   .module-featured {
+    min-height: 300px;
+  }
+
+  .games-module {
+    grid-column: span 2;
+    grid-row: span 2;
     min-height: 300px;
   }
 }
@@ -755,11 +909,26 @@ h1 {
 
   .module-tile,
   .module-featured,
-  .module-games,
   .module-wide {
     grid-column: span 1;
     grid-row: span 1;
     min-height: 190px;
+  }
+
+  .games-module {
+    grid-column: span 1;
+    grid-row: span 1;
+    min-height: 303px;
+    padding: 17px;
+  }
+
+  .game-track {
+    height: 225px;
+    margin-top: 14px;
+  }
+
+  .game-card {
+    flex-basis: 225px;
   }
 
   .module-inline-content {

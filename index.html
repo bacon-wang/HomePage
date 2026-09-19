@@ -141,21 +141,50 @@
                   <span>后端</span>
                   <span>AI</span>
                 </div>
+                <div class="module-links">
+                  <a href="https://blog.csdn.net/BaconZzz" target="_blank" rel="noreferrer">
+                    技术博客 <span aria-hidden="true">↗</span>
+                  </a>
+                  <a href="https://github.com/bacon-wang" target="_blank" rel="noreferrer">
+                    代码仓库 <span aria-hidden="true">↗</span>
+                  </a>
+                </div>
               </div>
               <span class="module-mark" aria-hidden="true">↗</span>
             </article>
 
-            <article class="module-tile module-games module-dark" data-module="games">
+            <section class="games-module" data-module="games" aria-labelledby="games-title">
               <div class="module-topline">
-                <span class="module-label">找我游戏</span>
-                <span class="module-number">02</span>
+                <h3 id="games-title" class="module-label">找我游戏</h3>
+                <div class="game-controls" aria-label="切换游戏">
+                  <button class="game-control" type="button" data-direction="previous" aria-label="上一个游戏">←</button>
+                  <button class="game-control" type="button" data-direction="next" aria-label="下一个游戏">→</button>
+                </div>
               </div>
-              <div class="module-content">
-                <h3>先开一局，再聊技术。</h3>
-                <p>喜欢有规则、反馈和一点意外的游戏。也欢迎从“最近玩什么”开始聊天。</p>
+              <div class="game-track" aria-label="游戏列表">
+                <article class="game-card" style="--game-image: url('assets/game-delta-force.jpg');">
+                  <div class="game-card-topline">
+                    <span>三角洲行动</span>
+                    <span>01</span>
+                  </div>
+                  <div class="game-card-content">
+                    <h4>智勇双全 beibei</h4>
+                    <p>机密 KD 2.3<br />绝密 KD 1.9</p>
+                  </div>
+                </article>
+                <article class="game-card" style="--game-image: url('assets/game-valorant.jpg');">
+                  <div class="game-card-topline">
+                    <span>无畏契约</span>
+                    <span>02</span>
+                  </div>
+                  <div class="game-card-content">
+                    <h4>bei 神丿男人</h4>
+                    <p>最高段位：神话<br />目前很久没玩，未定级</p>
+                  </div>
+                </article>
               </div>
-              <span class="module-mark" aria-hidden="true">+</span>
-            </article>
+              <p class="games-note">横向滑动，挑一局。</p>
+            </section>
 
             <article class="module-tile module-compact" data-module="learning">
               <div class="module-topline">
@@ -168,14 +197,14 @@
               </div>
             </article>
 
-            <article class="module-tile module-compact" data-module="fitness">
+            <article class="module-tile module-compact module-image module-fitness" data-module="fitness">
               <div class="module-topline">
                 <span class="module-label">健身</span>
                 <span class="module-number">04</span>
               </div>
               <div class="module-content">
-                <h3>给大脑清缓存</h3>
-                <p>规律动一动，很多卡住的事情会松开一点。</p>
+                <h3>谭成义三分训练</h3>
+                <p>177 cm / 82 kg<br />体脂 15% / 正在执行</p>
               </div>
             </article>
 

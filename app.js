@@ -3,6 +3,8 @@ const chatInput = document.querySelector("#chat-input");
 const chatWindow = document.querySelector("#chat-window");
 const sendButton = document.querySelector(".send-button");
 const promptButtons = document.querySelectorAll(".prompt-button");
+const gameTrack = document.querySelector(".game-track");
+const gameControls = document.querySelectorAll(".game-control");
 
 const responseRules = [
   {
@@ -134,6 +136,20 @@ promptButtons.forEach((button) => {
     chatInput.value = question;
     chatInput.dispatchEvent(new Event("input"));
     submitMessage(question);
+  });
+});
+
+gameControls.forEach((button) => {
+  button.addEventListener("click", () => {
+    const card = gameTrack.querySelector(".game-card");
+    const gap = Number.parseFloat(getComputedStyle(gameTrack).columnGap) || 0;
+    const distance = card.getBoundingClientRect().width + gap;
+    const direction = button.dataset.direction === "previous" ? -1 : 1;
+
+    gameTrack.scrollBy({
+      left: distance * direction,
+      behavior: "smooth",
+    });
   });
 });
 
