@@ -18,6 +18,17 @@ python3 -m http.server 4173
 - `styles.css`：黑白视觉、响应式布局和组件样式
 - `app.js`：本地关键词聊天逻辑
 
+## 添加个人信息方格
+
+页面下方的模块墙由 `index.html` 中的 `.module-tile` 独立方格组成。添加内容时，可以复制一个现有的 `<article class="module-tile">`，替换标题和正文，并按需要使用这些布局类：
+
+- `module-featured`：两列两行的大模块
+- `module-wide`：横跨两列的模块
+- `module-dark`：黑底反差模块
+- `module-compact`：适合短内容的小模块
+
+桌面端使用多列方格，手机端会自动变成单列，不需要额外修改 JavaScript。
+
 ## 发布到 GitHub Pages
 
 仓库已经配置了 [Static HTML workflow](.github/workflows/static.yml)，会在 `main` 分支有新提交时自动部署。
