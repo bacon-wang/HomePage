@@ -68,7 +68,6 @@ button {
 }
 
 .wordmark-sub,
-.eyebrow,
 .section-index,
 .chat-kicker,
 .chat-state,
@@ -114,12 +113,6 @@ button {
 
 .profile-intro {
   padding-bottom: 55px;
-}
-
-.eyebrow {
-  margin: 0 0 18px;
-  color: var(--soft-muted);
-  font-weight: 600;
 }
 
 h1,
@@ -436,18 +429,6 @@ h1 {
 
 .module-dark .module-mark {
   color: #bebeb9;
-}
-
-.module-inline-content {
-  display: grid;
-  grid-template-columns: minmax(150px, 0.8fr) minmax(0, 1.2fr);
-  align-items: end;
-  gap: 30px;
-}
-
-.module-inline-content h3,
-.module-inline-content p {
-  margin-bottom: 0;
 }
 
 .game-track {
@@ -929,14 +910,6 @@ h1 {
 
   .game-card {
     flex-basis: 225px;
-  }
-
-  .module-inline-content {
-    display: block;
-  }
-
-  .module-inline-content p {
-    margin-top: 12px;
   }
 
   .info-row {
