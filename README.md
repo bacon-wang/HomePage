@@ -20,10 +20,12 @@ python3 -m http.server 4173
 
 ## 发布到 GitHub Pages
 
-1. 在 GitHub 创建一个公开仓库。
-2. 将本目录推送到仓库的 `main` 分支。
-3. 打开仓库的 **Settings → Pages**。
-4. 将构建来源设置为 `Deploy from a branch`，选择 `main` 分支和 `/ (root)` 目录。
-5. 等待 GitHub Pages 完成部署，然后使用生成的公开 URL 访问。
+仓库已经配置了 [Static HTML workflow](.github/workflows/static.yml)，会在 `main` 分支有新提交时自动部署。
+
+1. 将本目录的改动提交并推送到 GitHub 的 `main` 分支。
+2. 在仓库的 **Actions** 页面等待 `Deploy static content to Pages` 工作流完成。
+3. 部署成功后，通过 <https://bacon-wang.github.io/HomePage/> 访问网站。
+
+如果是第一次开启 Pages，需要在 **Settings → Pages** 将 Source 设置为 `GitHub Actions`。
 
 当前聊天区不依赖 API Key，也不会向外部服务发送访客输入。
