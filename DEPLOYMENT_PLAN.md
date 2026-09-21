@@ -24,13 +24,22 @@ GitHub Pages 和现有 Cloudflare Worker 暂时保留，分别作为公开备用
 
 首版不处理域名、HTTPS、登录、数据库、长期聊天记录、流式输出、管理后台或复杂监控。
 
+### 当前进度（2026-09-21）
+
+- [x] 阶段 A：服务器准备
+- [x] 阶段 B：Node.js 后端实现
+- [x] 阶段 C：Docker Compose 首次部署与公网验收
+- [ ] 阶段 D：GitHub Actions SSH 自动部署
+
+当前线上入口：<http://119.23.144.160>。主页、静态资源、健康检查和真实 AI 聊天均已验证。
+
 ## 2. 服务器与部署约定
 
 - 主机：`119.23.144.160`
 - SSH 用户：`bacon`
 - SSH 端口：`22`
 - 系统：Ubuntu 26.04 LTS
-- 项目目录：`/home/bacon/project`
+- 项目目录：`/home/bacon/project/my_home_page`
 - Node.js：`22.22.1`（已安装）
 - 容器运行时：Docker Engine + Docker Compose v2（待安装）
 - 访问入口：`http://119.23.144.160`
@@ -42,7 +51,7 @@ GitHub Pages 和现有 Cloudflare Worker 暂时保留，分别作为公开备用
 ## 3. 目标项目结构
 
 ```text
-/home/bacon/project
+/home/bacon/project/my_home_page
 ├── server/
 │   ├── src/index.js
 │   ├── package.json
@@ -147,7 +156,7 @@ Worker 或服务器接口不可用时，前端继续使用本地关键词回答�
    PORT=3000
    ```
 
-4. 将项目同步到 `/home/bacon/project`。
+4. 将项目同步到 `/home/bacon/project/my_home_page`。
 5. 执行 `docker compose up -d --build`。
 6. 通过本机和公网 IP 检查 `/health`、主页资源和聊天请求。
 
@@ -157,7 +166,7 @@ Worker 或服务器接口不可用时，前端继续使用本地关键词回答�
 
 1. 使用专用部署 SSH 密钥，不复用个人私钥。
 2. 配置 `SERVER_HOST`、`SERVER_USER`、`SERVER_PORT`、`SERVER_SSH_KEY` 和 `SERVER_KNOWN_HOSTS`。
-3. 推送 `main` 后同步代码到 `/home/bacon/project`。
+3. 推送 `main` 后同步代码到 `/home/bacon/project/my_home_page`。
 4. 保留服务器 `.env`，执行 `docker compose up -d --build`。
 5. 部署后自动检查 `/health`；失败时保留旧容器运行。
 
