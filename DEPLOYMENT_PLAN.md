@@ -29,9 +29,11 @@ GitHub Pages 和现有 Cloudflare Worker 暂时保留，分别作为公开备用
 - [x] 阶段 A：服务器准备
 - [x] 阶段 B：Node.js 后端实现
 - [x] 阶段 C：Docker Compose 首次部署与公网验收
-- [ ] 阶段 D：GitHub Actions SSH 自动部署（Secrets 已配置，健康检查等待逻辑已修复，待成功运行验收）
+- [x] 阶段 D：GitHub Actions SSH 自动部署
 
 当前线上入口：<http://119.23.144.160>。主页、静态资源、健康检查和真实 AI 聊天均已验证。
+
+首次自动部署验收已通过：[GitHub Actions run 35605198474](https://github.com/bacon-wang/HomePage/actions/runs/35605198474)。工作流会等待容器从 `starting` 进入 `healthy`，不会在刚启动时误判失败。
 
 ## 2. 服务器与部署约定
 
