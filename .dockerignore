@@ -1,0 +1,10 @@
+.git
+.github
+.wrangler
+.env
+worker
+README.md
+DEPLOYMENT_PLAN.md
+outputs
+work
+*.log
