@@ -232,7 +232,9 @@ async function serveStatic(urlPath, response) {
       "Content-Length": fileStat.size,
       "Content-Type": MIME_TYPES[path.extname(filePath).toLowerCase()] || "application/octet-stream",
     });
-    return createReadStream(filePath).pipe(response);
+    const stream = createReadStream(filePath);
+    stream.on("error", () => response.destroy());
+    return stream.pipe(response);
   } catch {
     return sendError(response, 404, "not_found", "Not found");
   }

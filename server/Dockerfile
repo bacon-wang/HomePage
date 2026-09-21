@@ -6,6 +6,7 @@ ENV NODE_ENV=production
 COPY server ./server
 COPY index.html styles.css app.js chat-config.js ./
 COPY assets ./assets
+RUN chmod -R a=rX /app
 
 USER node
 EXPOSE 3000
