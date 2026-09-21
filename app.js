@@ -16,7 +16,7 @@ let isSubmitting = false;
 function setChatOpen(isOpen) {
   chatPanel.hidden = !isOpen;
   chatToggle.setAttribute("aria-expanded", String(isOpen));
-  chatToggle.setAttribute("aria-label", isOpen ? "关闭数字分身聊天" : "打开数字分身聊天");
+  chatToggle.setAttribute("aria-label", isOpen ? "关闭数字分身" : "打开数字分身");
 
   if (isOpen) {
     chatInput.focus();
