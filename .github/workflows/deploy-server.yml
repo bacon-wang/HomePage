@@ -5,7 +5,6 @@ on:
     branches: ["main"]
     paths-ignore:
       - "DEPLOYMENT_PLAN.md"
-      - ".github/workflows/deploy-server.yml"
   workflow_dispatch:
 
 jobs:
@@ -69,4 +68,19 @@ jobs:
           SERVER_USER: ${{ secrets.SERVER_USER }}
         run: |
           ssh -i ~/.ssh/deploy_key -p "${SERVER_PORT:-22}" -o BatchMode=yes "$SERVER_USER@$SERVER_HOST" \
-            'cd /home/bacon/project/my_home_page && docker compose up -d --build && test "$(docker inspect --format="{{.State.Health.Status}}" my_home_page-homepage-1)" = healthy'
+            'cd /home/bacon/project/my_home_page &&
+             docker compose up -d --build &&
+             container_id=$(docker compose ps -q homepage) &&
+             test -n "$container_id" &&
+             for attempt in $(seq 1 12); do
+               health=$(docker inspect --format="{{if .State.Health}}{{.State.Health.Status}}{{else}}{{.State.Status}}{{end}}" "$container_id")
+               echo "Health check $attempt/12: $health"
+               if [ "$health" = healthy ]; then exit 0; fi
+               if [ "$health" = unhealthy ] || [ "$health" = exited ] || [ "$health" = dead ]; then
+                 docker compose logs --tail=100 homepage
+                 exit 1
+               fi
+               sleep 5
+             done
+             docker compose logs --tail=100 homepage
+             exit 1'
