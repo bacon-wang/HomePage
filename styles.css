@@ -333,6 +333,8 @@ h1 {
 }
 
 .project-hero-panel {
+  grid-column: 2;
+  grid-row: 1;
   align-self: stretch;
 }
 
@@ -931,6 +933,11 @@ h1 {
     min-height: 300px;
   }
 
+  .hero-grid > .project-hero-panel {
+    grid-column: 2;
+    grid-row: 1;
+  }
+
   .games-module {
     grid-column: span 2;
     grid-row: span 2;
@@ -1003,6 +1010,11 @@ h1 {
     grid-column: span 1;
     grid-row: span 1;
     min-height: 190px;
+  }
+
+  .hero-grid > .project-hero-panel {
+    grid-column: 1;
+    grid-row: auto;
   }
 
   .games-module {
