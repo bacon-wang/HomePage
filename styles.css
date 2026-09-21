@@ -336,6 +336,89 @@ h1 {
   grid-column: 2;
   grid-row: 1;
   align-self: stretch;
+  justify-content: flex-start;
+}
+
+.project-panel-heading p {
+  max-width: 360px;
+  margin: 17px 0 0;
+  color: var(--muted);
+  font-size: 13px;
+  line-height: 1.6;
+}
+
+.project-count {
+  color: var(--soft-muted);
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+}
+
+.project-list {
+  display: grid;
+  flex: 1;
+  grid-template-rows: repeat(3, minmax(0, 1fr));
+  margin-top: 30px;
+  border-top: 1px solid var(--line);
+}
+
+.project-entry {
+  display: grid;
+  grid-template-columns: 30px minmax(0, 1fr) 24px;
+  align-items: center;
+  gap: 14px;
+  min-width: 0;
+  padding: 17px 0;
+  border-bottom: 1px solid var(--line);
+  color: var(--ink);
+  text-decoration: none;
+  transition: background-color 160ms ease, padding 160ms ease;
+}
+
+.project-entry:hover {
+  padding-right: 10px;
+  padding-left: 10px;
+  background: var(--white);
+}
+
+.project-entry-index {
+  align-self: start;
+  padding-top: 3px;
+  color: var(--soft-muted);
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+}
+
+.project-entry-body {
+  display: grid;
+  min-width: 0;
+  gap: 6px;
+}
+
+.project-entry-title {
+  font-size: 17px;
+  font-weight: 600;
+  line-height: 1.25;
+}
+
+.project-entry-description {
+  color: var(--muted);
+  font-size: 12px;
+  line-height: 1.55;
+}
+
+.project-entry-arrow {
+  align-self: start;
+  color: var(--soft-muted);
+  font-size: 20px;
+  line-height: 1;
+  transition: color 160ms ease, transform 160ms ease;
+}
+
+.project-entry:hover .project-entry-arrow {
+  color: var(--ink);
+  transform: translate(2px, -2px);
 }
 
 .module-wide {
