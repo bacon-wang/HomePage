@@ -22,11 +22,92 @@
         <section class="hero-grid" aria-labelledby="profile-title">
           <div class="profile-column">
             <div class="profile-intro">
-              <h1 id="profile-title">王培根</h1>
-              <p class="tagline">闷骚</p>
+              <div class="profile-heading-row">
+                <div class="profile-heading-copy">
+                  <h1 id="profile-title">王培根</h1>
+                  <p class="tagline">闷骚</p>
+                </div>
+                <button
+                  class="chat-float-toggle"
+                  id="chat-toggle"
+                  type="button"
+                  aria-controls="chat-panel"
+                  aria-expanded="false"
+                  aria-label="打开数字分身聊天"
+                  title="打开数字分身聊天"
+                >
+                  <span class="chat-float-kicker">DIGITAL TWIN</span>
+                  <span class="chat-float-label">问我</span>
+                  <span class="chat-float-status">
+                    <span class="status-dot" aria-hidden="true"></span>
+                    在线
+                  </span>
+                </button>
+              </div>
               <p class="profile-summary">
                 在 C++ 后端和 vibe coding 之间切换，偶尔让大脑安静地过载。
               </p>
+
+              <aside class="chat-panel" id="chat-panel" aria-labelledby="chat-title" hidden>
+                <div class="chat-header">
+                  <div>
+                    <p class="chat-kicker">DIGITAL TWIN</p>
+                    <h2 id="chat-title">和我的分身聊聊</h2>
+                  </div>
+                  <div class="chat-header-actions">
+                    <span class="chat-state" aria-label="数字分身在线，AI 回复">
+                      <span class="status-dot" aria-hidden="true"></span>
+                      <span>在线 / AI 回复</span>
+                    </span>
+                    <button class="chat-close-button" id="chat-close" type="button" aria-label="关闭数字分身聊天" title="关闭数字分身聊天">×</button>
+                  </div>
+                </div>
+
+                <div class="presence-line" aria-label="分身当前状态">
+                  <span class="presence-pulse" aria-hidden="true"></span>
+                  <span>脑内缓存较多，正在认真听</span>
+                </div>
+
+                <div class="chat-window" id="chat-window" aria-live="polite" aria-label="聊天记录">
+                  <div class="message message-assistant">
+                    <span class="message-author">培根的分身</span>
+                    <p>嗨。你可以问我最近在忙什么，或者 C++、AI 和 vibe coding。</p>
+                  </div>
+                  <div class="message message-assistant message-muted">
+                    <span class="message-author">提示</span>
+                    <p>我可能会先发一会儿呆，再给你一个不太绕的回答。</p>
+                  </div>
+                </div>
+
+                <div class="prompt-list" aria-label="快捷问题">
+                  <button class="prompt-button" type="button" data-question="你最近在忙什么？">
+                    你最近在忙什么？
+                  </button>
+                  <button class="prompt-button" type="button" data-question="你为什么学 vibe coding？">
+                    为什么学 vibe coding？
+                  </button>
+                  <button class="prompt-button" type="button" data-question="你擅长什么？">
+                    你擅长什么？
+                  </button>
+                </div>
+
+                <form class="chat-form" id="chat-form">
+                  <label class="sr-only" for="chat-input">输入问题</label>
+                  <textarea
+                    id="chat-input"
+                    name="message"
+                    rows="1"
+                    maxlength="240"
+                    placeholder="问我一点什么..."
+                    autocomplete="off"
+                    required
+                  ></textarea>
+                  <button class="send-button" type="submit" aria-label="发送消息" title="发送消息">
+                    <span aria-hidden="true">↑</span>
+                  </button>
+                </form>
+                <p class="chat-hint">消息经第三方平台处理，请勿输入敏感信息。</p>
+              </aside>
             </div>
 
             <section class="facts-section" aria-labelledby="facts-title">
@@ -54,68 +135,33 @@
               </dl>
             </section>
 
-            <p class="profile-note">
-              朋友可以从右边问我几句。分身不是实时在线的本人。
-            </p>
+            <p class="profile-note">朋友可以点右上角的小方框，问我几句。分身不是实时在线的本人。</p>
           </div>
 
-          <aside class="chat-panel" aria-labelledby="chat-title">
-            <div class="chat-header">
-              <div>
-                <p class="chat-kicker">DIGITAL TWIN</p>
-                <h2 id="chat-title">和我的分身聊聊</h2>
-              </div>
-              <span class="chat-state" aria-label="数字分身在线，AI 回复">
-                <span class="status-dot" aria-hidden="true"></span>
-                <span>在线 / AI 回复</span>
-              </span>
+          <article class="module-tile module-projects module-featured project-hero-panel" data-module="projects">
+            <div class="module-topline">
+              <span class="module-label">个人项目</span>
+              <span class="module-number">01</span>
             </div>
-
-            <div class="presence-line" aria-label="分身当前状态">
-              <span class="presence-pulse" aria-hidden="true"></span>
-              <span>脑内缓存较多，正在认真听</span>
-            </div>
-
-            <div class="chat-window" id="chat-window" aria-live="polite" aria-label="聊天记录">
-              <div class="message message-assistant">
-                <span class="message-author">培根的分身</span>
-                <p>嗨。你可以问我最近在忙什么，或者 C++、AI 和 vibe coding。</p>
+            <div class="module-content">
+              <h3>把想法做成可以打开的东西。</h3>
+              <p>在 C++ 后端和 vibe coding 之间来回切换，边做边理解，边发一点呆。</p>
+              <div class="module-tags" aria-label="项目方向">
+                <span>C++</span>
+                <span>后端</span>
+                <span>AI</span>
               </div>
-              <div class="message message-assistant message-muted">
-                <span class="message-author">提示</span>
-                <p>我可能会先发一会儿呆，再给你一个不太绕的回答。</p>
+              <div class="module-links">
+                <a href="https://blog.csdn.net/BaconZzz" target="_blank" rel="noreferrer">
+                  技术博客 <span aria-hidden="true">↗</span>
+                </a>
+                <a href="https://github.com/bacon-wang" target="_blank" rel="noreferrer">
+                  代码仓库 <span aria-hidden="true">↗</span>
+                </a>
               </div>
             </div>
-
-            <div class="prompt-list" aria-label="快捷问题">
-              <button class="prompt-button" type="button" data-question="你最近在忙什么？">
-                你最近在忙什么？
-              </button>
-              <button class="prompt-button" type="button" data-question="你为什么学 vibe coding？">
-                为什么学 vibe coding？
-              </button>
-              <button class="prompt-button" type="button" data-question="你擅长什么？">
-                你擅长什么？
-              </button>
-            </div>
-
-            <form class="chat-form" id="chat-form">
-              <label class="sr-only" for="chat-input">输入问题</label>
-              <textarea
-                id="chat-input"
-                name="message"
-                rows="1"
-                maxlength="240"
-                placeholder="问我一点什么..."
-                autocomplete="off"
-                required
-              ></textarea>
-              <button class="send-button" type="submit" aria-label="发送消息" title="发送消息">
-                <span aria-hidden="true">↑</span>
-              </button>
-            </form>
-            <p class="chat-hint">消息经第三方平台处理，请勿输入敏感信息。</p>
-          </aside>
+            <span class="module-mark" aria-hidden="true">↗</span>
+          </article>
         </section>
 
         <section class="modules-section" aria-labelledby="modules-title">
@@ -128,31 +174,6 @@
           </div>
 
           <div class="module-grid">
-            <article class="module-tile module-projects module-featured" data-module="projects">
-              <div class="module-topline">
-                <span class="module-label">个人项目</span>
-                <span class="module-number">01</span>
-              </div>
-              <div class="module-content">
-                <h3>把想法做成可以打开的东西。</h3>
-                <p>在 C++ 后端和 vibe coding 之间来回切换，边做边理解，边发一点呆。</p>
-                <div class="module-tags" aria-label="项目方向">
-                  <span>C++</span>
-                  <span>后端</span>
-                  <span>AI</span>
-                </div>
-                <div class="module-links">
-                  <a href="https://blog.csdn.net/BaconZzz" target="_blank" rel="noreferrer">
-                    技术博客 <span aria-hidden="true">↗</span>
-                  </a>
-                  <a href="https://github.com/bacon-wang" target="_blank" rel="noreferrer">
-                    代码仓库 <span aria-hidden="true">↗</span>
-                  </a>
-                </div>
-              </div>
-              <span class="module-mark" aria-hidden="true">↗</span>
-            </article>
-
             <section class="games-module" data-module="games" aria-labelledby="games-title">
               <div class="module-topline">
                 <h3 id="games-title" class="module-label">找我游戏</h3>

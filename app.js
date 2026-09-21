@@ -2,6 +2,9 @@ const chatForm = document.querySelector("#chat-form");
 const chatInput = document.querySelector("#chat-input");
 const chatWindow = document.querySelector("#chat-window");
 const sendButton = document.querySelector(".send-button");
+const chatToggle = document.querySelector("#chat-toggle");
+const chatClose = document.querySelector("#chat-close");
+const chatPanel = document.querySelector("#chat-panel");
 const promptButtons = document.querySelectorAll(".prompt-button");
 const gameTrack = document.querySelector(".game-track");
 const gameControls = document.querySelectorAll(".game-control");
@@ -9,6 +12,16 @@ const chatApiUrl = typeof window.CHAT_API_URL === "string" ? window.CHAT_API_URL
 const maxHistoryMessages = 8;
 let conversation = [];
 let isSubmitting = false;
+
+function setChatOpen(isOpen) {
+  chatPanel.hidden = !isOpen;
+  chatToggle.setAttribute("aria-expanded", String(isOpen));
+  chatToggle.setAttribute("aria-label", isOpen ? "关闭数字分身聊天" : "打开数字分身聊天");
+
+  if (isOpen) {
+    chatInput.focus();
+  }
+}
 
 const responseRules = [
   {
@@ -207,6 +220,22 @@ promptButtons.forEach((button) => {
     chatInput.dispatchEvent(new Event("input"));
     void submitMessage(question);
   });
+});
+
+chatToggle.addEventListener("click", () => {
+  setChatOpen(chatPanel.hidden);
+});
+
+chatClose.addEventListener("click", () => {
+  setChatOpen(false);
+  chatToggle.focus();
+});
+
+document.addEventListener("keydown", (event) => {
+  if (event.key === "Escape" && !chatPanel.hidden) {
+    setChatOpen(false);
+    chatToggle.focus();
+  }
 });
 
 gameControls.forEach((button) => {
