@@ -26,35 +26,39 @@ function setChatOpen(isOpen) {
 const responseRules = [
   {
     keywords: ["最近", "在忙", "做什么", "近况"],
-    answer: "最近主要在做 C++ 后端开发，也在学 vibe coding。两边来回切换，偶尔会因为信息太多直接发愣。",
+    answer: "没干啥啊，就学学习，健健身。最近还可以，学习健身都有。",
   },
   {
     keywords: ["vibe", "编程", "为什么学", "学习"],
-    answer: "我想把写代码从“先想完整再动手”变成更自然的探索。vibe coding 对我来说像是边做边理解，重点是保持好奇心。",
+    answer: "就边做边学，先把东西跑起来。能跑就算阶段性成功。",
   },
   {
     keywords: ["擅长", "cpp", "c++", "后端", "技术"],
-    answer: "我比较擅长 C++，现在关注后端服务、性能和工程实践。遇到复杂问题时，我会先把它拆小一点。",
+    answer: "主要是 C++ 基础语法、STL、多线程和并发。勉强实习的水平，能独立做一些小项目。",
+  },
+  {
+    keywords: ["项目", "class2ical", "muduo", "gobang", "五子棋", "课表"],
+    answer: "项目主要是拿来练习的。Class2iCal 做课表转日历，muduo 练事件驱动的 TCP 和 HTTP，gobang 是 WebSocket 在线五子棋。重点是能跑，不吹得太厉害。",
   },
   {
     keywords: ["ai", "人工智能", "关心"],
-    answer: "我很关心 AI，尤其是它怎么进入真实的开发流程。比起追热点，我更想知道它能不能让一个想法更快变成可用的东西。",
+    answer: "关心啊，主要想看看 AI 能不能真的帮我把东西做出来。",
   },
   {
     keywords: ["健身", "锻炼", "运动"],
-    answer: "健身是我给大脑清缓存的方式。规律动一动之后，很多卡住的事情会突然变得没那么复杂。",
+    answer: "最近在执行谭成义三分化训练。177 cm，82 kg，体脂 15%，先练着。",
   },
   {
     keywords: ["游戏", "玩什么", "娱乐"],
-    answer: "我喜欢游戏，具体玩什么会随阶段变化。对我来说，游戏是放松，也是观察规则、反馈和设计的方式。",
+    answer: "主要玩三角洲和无畏契约。三角洲 ID 是智勇双全 beibei，无畏契约 ID 是 bei 神丿男人。",
   },
   {
     keywords: ["发愣", "过载", "大脑", "性格", "特点"],
-    answer: "我的大脑比较容易过载，所以经常会突然发愣。表面上像是在放空，其实可能是在后台整理刚刚收到的信息。",
+    answer: "我比较粗心，三分钟热度，大脑也容易过载。专注一件事时，经常会下意识忽略别的东西。",
   },
   {
     keywords: ["身份", "学生", "是谁", "介绍"],
-    answer: "我是王培根，一个正在学习和做项目的学生。现在的关键词是 C++ 后端、vibe coding，还有对 AI 的好奇。",
+    answer: "我是 Bacon。特点是粗心大意、三分钟热度，容易大脑过载。现在主要在学 C++、做点后端和 vibe coding，项目能跑就算阶段性成功。",
   },
 ];
 
@@ -68,7 +72,7 @@ function findResponse(text) {
     rule.keywords.some((keyword) => normalizedText.includes(normalize(keyword))),
   );
 
-  return matchedRule?.answer ?? "这是一个很好的问题。我的本地分身还没准备好这个答案，但我会先想一会儿，再继续学 C++ 和 AI。";
+  return matchedRule?.answer ?? "不是很懂。";
 }
 
 function scrollChatToBottom() {
