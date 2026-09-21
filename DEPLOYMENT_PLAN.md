@@ -29,7 +29,7 @@ GitHub Pages 和现有 Cloudflare Worker 暂时保留，分别作为公开备用
 - [x] 阶段 A：服务器准备
 - [x] 阶段 B：Node.js 后端实现
 - [x] 阶段 C：Docker Compose 首次部署与公网验收
-- [ ] 阶段 D：GitHub Actions SSH 自动部署
+- [ ] 阶段 D：GitHub Actions SSH 自动部署（工作流已创建，仓库 Secrets 待配置）
 
 当前线上入口：<http://119.23.144.160>。主页、静态资源、健康检查和真实 AI 聊天均已验证。
 
@@ -169,6 +169,16 @@ Worker 或服务器接口不可用时，前端继续使用本地关键词回答�
 3. 推送 `main` 后同步代码到 `/home/bacon/project/my_home_page`。
 4. 保留服务器 `.env`，执行 `docker compose up -d --build`。
 5. 部署后自动检查 `/health`；失败时保留旧容器运行。
+
+当前工作流文件为 `.github/workflows/deploy-server.yml`。在 GitHub 仓库中配置以下 Secrets 后，推送 `main` 才会执行服务器部署：
+
+```text
+SERVER_HOST=119.23.144.160
+SERVER_USER=bacon
+SERVER_PORT=22
+SERVER_SSH_KEY=专用部署私钥
+SERVER_KNOWN_HOSTS=服务器指纹
+```
 
 ## 7. 验收标准
 
